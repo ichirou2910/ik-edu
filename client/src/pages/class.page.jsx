@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useHttpClient } from "../hooks/http-hook";
 import UserContext from "../contexts/user.context";
 
+import ClassSearch from "../components/class-search.component";
 import LectureList from "../components/lecture-list.component";
 import MemberList from "../components/member-list.component";
 import PendingList from "../components/pending-list.component";
@@ -61,7 +62,16 @@ const ClassPage = () => {
 
   return (
     <>
-      {/* {error && <h2>{error}</h2>} */}
+      {/* {error && ( */}
+      {/*   <> */}
+      {/*     <h4 className="text-danger">{error}</h4> */}
+      {/*     <p className="text-danger"> */}
+      {/*       Please try looking for another class or contact the admin. */}
+      {/*     </p> */}
+      {/*     <ClassSearch /> */}
+      {/*     <br /> */}
+      {/*   </> */}
+      {/* )} */}
       <h2>{classId}</h2>
       <br />
       {!isLoading && currentUser && !classData && (
@@ -75,6 +85,7 @@ const ClassPage = () => {
           </button>
         </div>
       )}
+      <br />
       {!isLoading && currentUser && classData && (
         <>
           <div className="d-flex">

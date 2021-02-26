@@ -28,7 +28,7 @@ const Login = () => {
           <input
             type="email"
             name="email"
-            id="email"
+            id="signup-email"
             className="form-control"
             label="email"
             value={email}
@@ -43,7 +43,7 @@ const Login = () => {
           <input
             type="password"
             name="password"
-            id="password"
+            id="signup-password"
             className="form-control"
             label="password"
             value={password}
@@ -51,7 +51,7 @@ const Login = () => {
             required
           />
         </div>
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" className="btn btn-primary">
           Submit
         </button>
       </form>

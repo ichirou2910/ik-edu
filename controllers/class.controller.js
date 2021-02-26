@@ -31,7 +31,11 @@ const getById = async (req, res) => {
     return next(err);
   }
   if (!classList) {
-    res.status(404).json({ message: "Class not found" });
+    res
+      .status(404)
+      .json({
+        message: "Oops! Looks like the class you are looking for doesn't exist",
+      });
     return;
   }
 
@@ -143,18 +147,21 @@ const join = async (req, res) => {
   let classData;
 
   try {
-    classData = await Class.findOne({ classId: classId });
+    classData = await Class.findOne({ classId });
   } catch (err) {
     res.status(500).json({ message: "Failed to fetch class info" });
   }
 
   if (!classData) {
-    res.status(404).json({ message: "Class not found" });
+    res.status(404).json({
+      message: "Oops! Looks like the class you are looking for doesn't exist",
+    });
+    return;
   }
 
   const newMember = { name, email, id };
 
-  classData.pending = [...classData.pending, newMember];
+  classData.pending.push(newMember);
 
   try {
     await classData.save();

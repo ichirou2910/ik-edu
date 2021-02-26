@@ -3,6 +3,7 @@ import React, { useEffect, useContext, useState } from "react";
 import UserContext from "../contexts/user.context";
 import { useHttpClient } from "../hooks/http-hook";
 
+import ClassSearch from "../components/class-search.component";
 import ClassList from "../components/class-list.component";
 import NewClass from "../components/new-class.component";
 import { FaPlus } from "react-icons/fa";
@@ -55,6 +56,8 @@ const HomePage = () => {
           </div>
           {showNewClass && <NewClass />}
           <hr />
+          <ClassSearch />
+          <br />
           <ClassList classes={classList} />
         </div>
       )}
