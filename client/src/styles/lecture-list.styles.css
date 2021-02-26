@@ -1,3 +1,73 @@
-img {
+.lecture-list {
+  font-size: 1.1rem;
+}
+
+.lecture-list img {
   vertical-align: text-bottom !important;
+}
+
+.lecture-list h1 {
+  font-size: 2.25rem;
+}
+
+.lecture-list h2 {
+  font-size: 2rem;
+}
+
+.lecture-list p {
+  margin-bottom: 3px;
+}
+
+.lecture-list ul,
+.lecture-list ol {
+  padding-left: 1.25rem;
+}
+
+.lecture-list a {
+  background-color: transparent;
+  text-decoration-skip: objects;
+}
+.lecture-list a:active,
+.lecture-list a:hover {
+  outline-width: 0;
+  text-decoration: none;
+}
+
+.lecture-list table {
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.lecture-list td,
+.lecture-list th {
+  border: 1px solid var(--text);
+  padding: 8px;
+}
+
+.lecture-list th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: var(--bg-nav);
+}
+
+.lecture-list pre {
+  padding: 0.5rem;
+  background-color: var(--bg);
+  border-radius: var(--border-radius);
+  overflow-x: scroll;
+}
+
+.lecture-list code {
+  font-family: "Ubuntu Mono";
+  font-size: 110%;
+  background-color: var(--bg);
+  padding: 0.25rem;
+  border-radius: var(--border-radius);
+}
+
+.lecture-list pre > code {
+  background-color: transparent;
+  border-radius: 0;
 }

@@ -81,7 +81,7 @@ const LectureList = () => {
   }, [sendRequest, classId, currentUser]);
 
   return (
-    <>
+    <div className="lecture-list">
       <div className="d-flex">
         <h3>Lectures</h3>
         {currentUser.isAdmin && lecEdited && (
@@ -139,7 +139,7 @@ const LectureList = () => {
           <FaPlus /> New Lecture
         </button>
       )}
-    </>
+    </div>
   );
 };
 

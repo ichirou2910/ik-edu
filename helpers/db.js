@@ -18,4 +18,5 @@ module.exports = {
   User: require("../models/User"),
   Class: require("../models/Class"),
   Lecture: require("../models/Lecture"),
+  Chat: require("../models/Chat"),
 };
