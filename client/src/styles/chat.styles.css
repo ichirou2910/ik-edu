@@ -1,0 +1,73 @@
+.chat {
+  height: calc(100vh - 80px);
+  display: flex;
+}
+
+.chat ul,
+.chat ol {
+  list-style-type: none;
+  padding: 0 0.5rem;
+}
+
+.chat ul {
+  list-style-type: none;
+  padding: 0 0.5rem;
+}
+
+.chat__list {
+  height: calc(100vg - 80px);
+  width: 20rem;
+  overflow: overlay;
+}
+
+.chat__list ul {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.chat__list li {
+  padding: 1rem 0.5rem;
+}
+
+.chat__list li:not(:first-child) {
+  margin: 0.5rem 0;
+}
+
+.chat__list li:hover {
+  cursor: pointer;
+}
+
+.chat__room {
+  padding: 1rem;
+  height: 100%;
+  flex-grow: 1;
+  display: flex;
+  margin-left: 0.5rem;
+  flex-direction: column;
+}
+
+.chat__messages {
+  flex-grow: 1;
+  padding: 0.25rem;
+  overflow-y: overlay;
+}
+
+.chat__input {
+  display: flex;
+  width: 100%;
+}
+
+.chat__input form {
+  flex-grow: 1;
+  display: flex;
+}
+
+.chat__input form div {
+  flex-grow: 1;
+}
+
+.chat__input input {
+  height: 100%;
+  width: 100%;
+}

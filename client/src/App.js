@@ -5,6 +5,7 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
+import socketIOClient from "socket.io-client";
 
 // -- Helpers
 import { auth } from "./firebase/firebase.utils";
@@ -14,10 +15,17 @@ import UserContext from "./contexts/user.context";
 import HomePage from "./pages/home.page";
 import ClassPage from "./pages/class.page";
 import Auth from "./pages/auth.page";
+import Chat from "./pages/chat.page";
 import Header from "./components/header.component";
+
+const ENDPOINT = "http://localhost:5000/";
+
+let socket;
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
+
+  socket = socketIOClient(ENDPOINT);
 
   let routes;
 
@@ -29,6 +37,9 @@ const App = () => {
         </Route>
         <Route exact path="/class/:classId">
           <ClassPage />
+        </Route>
+        <Route exact path="/chat">
+          <Chat />
         </Route>
         <Route exact path="/auth">
           <Auth />
@@ -45,6 +56,9 @@ const App = () => {
         <Route path="/class/:classId">
           <ClassPage />
         </Route>
+        <Route exact path="/chat">
+          <Chat />
+        </Route>
         <Route exact path="/auth">
           <Redirect to="/" />
         </Route>
@@ -58,6 +72,9 @@ const App = () => {
         </Route>
         <Route path="/class/:classId">
           <ClassPage />
+        </Route>
+        <Route exact path="/chat">
+          <Chat />
         </Route>
         <Route exact path="/auth">
           <Redirect to="/" />
@@ -101,4 +118,4 @@ const App = () => {
   );
 };
 
-export default App;
+export { App, socket };
