@@ -62,20 +62,10 @@ const ClassPage = () => {
 
   return (
     <>
-      {/* {error && ( */}
-      {/*   <> */}
-      {/*     <h4 className="text-danger">{error}</h4> */}
-      {/*     <p className="text-danger"> */}
-      {/*       Please try looking for another class or contact the admin. */}
-      {/*     </p> */}
-      {/*     <ClassSearch /> */}
-      {/*     <br /> */}
-      {/*   </> */}
-      {/* )} */}
       <h2>{classId}</h2>
-      <br />
       {!isLoading && currentUser && !classData && (
         <div>
+          <br />
           <p>
             Looks like you haven't joined this class. Click the button below to
             make a join request.

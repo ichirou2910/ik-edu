@@ -29,17 +29,19 @@ const Chat = () => {
 
   const switchHandler = async (id) => {
     try {
-      const infoData = await sendRequest(
-        `${process.env.REACT_APP_API_URL}/chat/${id}?page=1`,
-        "GET",
-        null,
-        {
+      fetch(`${process.env.REACT_APP_API_URL}/chat/${id}?page=1`, {
+        method: "GET",
+        headers: {
           Authorization: "Bearer " + currentUser.token,
-        }
+        },
+      }).then((res) =>
+        res.json().then((data) => {
+          setMessages([...data.docs].reverse());
+          setLoadedMessages([]);
+          setActiveId(id);
+          setMsgPage(1);
+        })
       );
-      setMessages([...infoData.docs].reverse());
-      setActiveId(id);
-      setMsgPage(1);
     } catch (err) {}
   };
 
