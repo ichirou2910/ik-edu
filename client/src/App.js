@@ -17,6 +17,7 @@ import ClassPage from "./pages/class.page";
 import Auth from "./pages/auth.page";
 import Chat from "./pages/chat.page";
 import Header from "./components/header.component";
+import ChatButton from "./components/chat-button.component";
 
 let socket;
 
@@ -111,6 +112,7 @@ const App = () => {
       <UserContext.Provider value={currentUser}>
         <Header />
         <main className="container mt-3">{routes}</main>
+        <ChatButton />
       </UserContext.Provider>
     </Router>
   );
