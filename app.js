@@ -46,6 +46,10 @@ app.use("/api/chat", require("./routes/chat.route"));
 app.use("/static", express.static("static"));
 app.use(express.static(path.join(__dirname, "client", "build")));
 
+app.use((_req, res, _next) => {
+  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+});
+
 app.use((_req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
