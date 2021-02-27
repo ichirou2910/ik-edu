@@ -135,7 +135,11 @@ const LectureList = () => {
           </div>
         ))}
       {currentUser.isAdmin && (
-        <button type="button" className="btn btn-info" onClick={addLecture}>
+        <button
+          type="button"
+          className="btn btn-info mb-3"
+          onClick={addLecture}
+        >
           <FaPlus /> New Lecture
         </button>
       )}
