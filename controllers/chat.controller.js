@@ -3,12 +3,14 @@ const Chat = db.Chat;
 
 const getById = async (req, res, next) => {
   const { classId } = req.params;
+  const { page } = req.query;
 
   let chats;
   try {
-    chats = await Chat.find({ classId }).sort({
-      date: 1,
-    });
+    chats = await Chat.paginate(
+      { classId },
+      { sort: { date: -1 }, page: page, limit: 30 }
+    );
   } catch (err) {
     res.status(500).json({ message: "Fetch failed" });
     return next(err);

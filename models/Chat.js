@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const mongoosePaginate = require("mongoose-paginate-v2");
 
 const ChatSchema = new mongoose.Schema({
   classId: {
@@ -22,6 +23,8 @@ const ChatSchema = new mongoose.Schema({
     required: true,
   },
 });
+
+ChatSchema.plugin(mongoosePaginate);
 
 const Chat = mongoose.model("Chat", ChatSchema);
 

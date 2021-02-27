@@ -4,36 +4,71 @@ import UserContext from "../contexts/user.context";
 import { useHttpClient } from "../hooks/http-hook";
 import { socket } from "../App";
 
+import {
+  MessageList,
+  GroupList,
+  InputForm,
+} from "../components/message.component";
+
 import "../styles/chat.styles.css";
 
 const Chat = () => {
   const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState("");
+  const [loadedMessages, setLoadedMessages] = useState([]);
+  const [msgPage, setMsgPage] = useState(0);
+
   const [classList, setClassList] = useState([]);
   const [activeId, setActiveId] = useState();
+
+  const [input, setInput] = useState("");
 
   const endMessage = useRef(null);
 
   const currentUser = useContext(UserContext);
-  const { isLoading, error, sendRequest } = useHttpClient();
+  const { isLoading, sendRequest } = useHttpClient();
 
   const switchHandler = async (id) => {
     try {
       const infoData = await sendRequest(
-        `${process.env.REACT_APP_API_URL}/chat/${id}`,
+        `${process.env.REACT_APP_API_URL}/chat/${id}?page=1`,
         "GET",
         null,
         {
           Authorization: "Bearer " + currentUser.token,
         }
       );
-      setMessages(infoData);
+      setMessages([...infoData.docs].reverse());
       setActiveId(id);
+      setMsgPage(1);
     } catch (err) {}
   };
 
-  const scrollToBottom = () => {
-    endMessage.current?.scrollIntoView({ behavior: "smooth" });
+  const loadMore = async () => {
+    if (msgPage) {
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_API_URL}/chat/${activeId}?page=${
+            msgPage + 1
+          }`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: "Bearer " + currentUser.token,
+            },
+          }
+        );
+        const infoData = await response.json();
+
+        if (!infoData.hasNextPage) setMsgPage(0);
+        else setMsgPage(msgPage + 1);
+        const newMessages = infoData.docs.reverse();
+        setLoadedMessages([...newMessages, ...loadedMessages]);
+      } catch (err) {}
+    }
+  };
+
+  const scrollToRef = (ref) => {
+    ref.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   const submitHandler = (e) => {
@@ -51,7 +86,7 @@ const Chat = () => {
   };
 
   useEffect(() => {
-    scrollToBottom();
+    scrollToRef(endMessage);
   }, [messages]);
 
   useEffect(() => {
@@ -89,65 +124,27 @@ const Chat = () => {
       {!currentUser && <h2 className="text-center">Login to continue</h2>}
       {!isLoading && classList && currentUser && (
         <>
-          <div className="chat__list border rounded border-dark">
-            <ul>
-              {classList.map((cl, index) => {
-                return (
-                  <li
-                    key={index}
-                    className={`border rounded ${
-                      cl.classId === activeId ? "border-danger" : "border-info"
-                    }`}
-                    onClick={() => switchHandler(cl.classId)}
-                  >
-                    {cl.classId}
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+          <GroupList
+            groups={classList}
+            switchHandler={switchHandler}
+            activeId={activeId}
+          />
           <div className="chat__room border rounded border-dark">
-            <div className="chat__messages border rounded border-danger flex-grow-1">
-              {!isLoading && messages && (
-                <>
-                  <ul>
-                    {messages.map((item, index) => {
-                      return (
-                        <li key={index} className="my-3">
-                          <span
-                            className={`${
-                              item.sender_name === currentUser.displayName
-                                ? "text-primary"
-                                : "text-info"
-                            }`}
-                          >
-                            {item.sender_name}:
-                          </span>{" "}
-                          {item.content}
-                        </li>
-                      );
-                    })}
-                    <div ref={endMessage}></div>
-                  </ul>
-                </>
-              )}
-            </div>
-            <div className="chat__input mt-2">
-              <form onSubmit={submitHandler} autoComplete="off">
-                <input
-                  id="input"
-                  type="text"
-                  name="input"
-                  value={input}
-                  className="form-control border-primary"
-                  placeholder="Type message here"
-                  onChange={(e) => setInput(e.target.value)}
-                />
-                <button type="submit" className="btn btn-primary btn-sm ml-1">
-                  SEND
-                </button>
-              </form>
-            </div>
+            {!isLoading && messages && (
+              <MessageList
+                currentUserName={currentUser.displayName}
+                loadedMessages={loadedMessages}
+                messages={messages}
+                hasNext={msgPage !== 0}
+                loadMore={loadMore}
+                endMessage={endMessage}
+              />
+            )}
+            <InputForm
+              input={input}
+              onChange={(e) => setInput(e.target.value)}
+              onSubmit={submitHandler}
+            />
           </div>
         </>
       )}
