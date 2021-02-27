@@ -72,7 +72,10 @@ const GroupList = ({ groups, switchHandler, activeId }) => {
               className={`border rounded ${
                 gr.classId === activeId ? "border-danger" : "border-info"
               }`}
-              onClick={() => switchHandler(gr.classId)}
+              style={gr.classId !== activeId ? { cursor: "pointer" } : {}}
+              onClick={() => {
+                if (gr.classId !== activeId) switchHandler(gr.classId);
+              }}
             >
               {gr.classId}
             </li>
