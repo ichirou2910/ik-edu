@@ -18,14 +18,12 @@ import Auth from "./pages/auth.page";
 import Chat from "./pages/chat.page";
 import Header from "./components/header.component";
 
-const ENDPOINT = "http://localhost:5000/";
-
 let socket;
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
 
-  socket = socketIOClient(ENDPOINT);
+  socket = socketIOClient(process.env.REACT_APP_SOCKET_ENDPOINT);
 
   let routes;
 
